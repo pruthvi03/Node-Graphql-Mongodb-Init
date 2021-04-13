@@ -78,16 +78,16 @@ app.use('/graphql',
                 return event.save()
                     .then(result => {
                         createdEvent = { ...result._doc, _id: event._doc._id.toString() };
-                        return User.findOne({_id:'60733bd14718da3bbc88b4f6'});
+                        return User.findOne({ _id: '60733bd14718da3bbc88b4f6' });
                     })
-                    .then(user=>{
-                        if (!user){
+                    .then(user => {
+                        if (!user) {
                             throw new Error('User exists already');
                         }
                         user.createdEvents.push(event);
                         return user.save();
                     })
-                    .then(result=>{
+                    .then(result => {
                         return createdEvent;
                     })
                     .catch(err => {
@@ -98,8 +98,8 @@ app.use('/graphql',
             },
             createUser: async (args) => {
                 try {
-                    const userExist = await User.findOne({email:args.userInput.email});
-                    if (userExist){
+                    const userExist = await User.findOne({ email: args.userInput.email });
+                    if (userExist) {
                         throw new Error('User exists already');
                     }
                     const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
@@ -115,8 +115,8 @@ app.use('/graphql',
 
 
             },
-            graphiql: true
-        }
+        },
+        graphiql: true
     })
 );
 
